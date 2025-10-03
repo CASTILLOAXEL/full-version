@@ -1,0 +1,438 @@
+{
+  "menu": [
+    {
+      "name": "Dashboards",
+      "icon": "menu-icon icon-base ti tabler-smart-home",
+      "slug": "dashboard",
+      "badge": [
+        "danger",
+        "5"
+      ],
+      "submenu": [
+        {
+          "url": "index",
+          "name": "Analytics",
+          "slug": "dashboard-analytics"
+        },
+        {
+          "name": "Clientes",
+          "icon": "menu-icon icon-base ti tabler-users-group",
+          "slug": "app-clientes",
+          "submenu": [
+            {
+              "url": "clientes-lista",
+              "name": "Lista de Clientes",
+              "slug": "clientes-lista"
+            },
+            {
+              "url": "clientes-nuevo",
+              "name": "Nuevo Cliente",
+              "slug": "clientes-nuevo"
+            }
+          ]
+        },
+        {
+          "name": "Pagos",
+          "icon": "menu-icon icon-base ti tabler-credit-card",
+          "slug": "app-pagos",
+          "submenu": [
+            {
+              "url": "pagos-lista",
+              "name": "Lista de Pagos",
+              "slug": "pagos-lista"
+            },
+            {
+              "url": "pagos-registrar",
+              "name": "Registrar Pago",
+              "slug": "pagos-registrar"
+            }
+          ]
+        },
+        {
+          "name": "Documentos",
+          "icon": "menu-icon icon-base ti tabler-folder",
+          "slug": "app-documentos",
+          "submenu": [
+            {
+              "url": "documentos-lista",
+              "name": "Lista de Documentos",
+              "slug": "documentos-lista"
+            },
+            {
+              "url": "documentos-subir",
+              "name": "Subir Documento",
+              "slug": "documentos-subir"
+            }
+          ]
+        }
+
+
+
+
+      ]
+    },
+    {
+      "name": "Layouts",
+      "icon": "menu-icon icon-base ti tabler-layout-sidebar",
+      "slug": "layouts",
+      "submenu": [
+        {
+          "url": "layouts-collapsed-menu",
+          "name": "Collapsed menu",
+          "slug": "layouts-collapsed-menu"
+        },
+        {
+          "url": "layouts-content-navbar",
+          "name": "Content navbar",
+          "slug": "layouts-content-navbar"
+        },
+        {
+          "url": "layouts-content-nav-sidebar",
+          "name": "Content nav + Sidebar",
+          "slug": "layouts-content-nav-sidebar"
+        },
+        {
+          "url": "layouts-horizontal",
+          "name": "Horizontal",
+          "slug": "layouts-horizontal",
+          "target": "_blank"
+        },
+        {
+          "url": "layouts-without-menu",
+          "name": "Without menu",
+          "slug": "layouts-without-menu"
+        },
+        {
+          "url": "layouts-without-navbar",
+          "name": "Without navbar",
+          "slug": "layouts-without-navbar"
+        },
+        {
+          "url": "layouts-fluid",
+          "name": "Fluid",
+          "slug": "layouts-fluid"
+        },
+        {
+          "url": "layouts-container",
+          "name": "Container",
+          "slug": "layouts-container"
+        },
+        {
+          "url": "layouts-blank",
+          "name": "Blank",
+          "slug": "layouts-blank",
+          "target": "_blank"
+        }
+      ]
+    },
+
+
+    {
+      "menu_header": "Apps & Pages"
+    },
+    {
+      "url": "app-email",
+      "name": "Email",
+      "icon": "menu-icon icon-base ti tabler-mail",
+      "slug": "app-email"
+    },
+    {
+      "url": "app-chat",
+      "name": "Chat",
+      "icon": "menu-icon icon-base ti tabler-messages",
+      "slug": "app-chat"
+    },
+    {
+      "url": "app-calendar",
+      "name": "Calendar",
+      "icon": "menu-icon icon-base ti tabler-calendar",
+      "slug": "app-calendar"
+    },
+
+
+
+
+
+    {
+      "name": "Users",
+      "icon": "menu-icon icon-base ti tabler-users",
+      "permission": "user.view_user",
+      "slug": "app-user",
+      "submenu": [
+        {
+          "url": "app-user-list",
+          "name": "List",
+          "slug": "app-user-list"
+        },
+        {
+          "name": "View",
+          "slug": "app-user-view",
+          "submenu": [
+            {
+              "url": "app-user-view-account",
+              "name": "Account",
+              "slug": "app-user-view-account"
+            },
+            {
+              "url": "app-user-view-security",
+              "name": "Security",
+              "slug": "app-user-view-security"
+            },
+            {
+              "url": "app-user-view-billing",
+              "name": "Billing & Plans",
+              "slug": "app-user-view-billing"
+            },
+            {
+              "url": "app-user-view-notifications",
+              "name": "Notifications",
+              "slug": "app-user-view-notifications"
+            },
+            {
+              "url": "app-user-view-connections",
+              "name": "Connections",
+              "slug": "app-user-view-connections"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Roles & Permissions",
+      "icon": "menu-icon icon-base ti tabler-settings",
+      "permission": "permission.view_permission",
+      "slug": "app-access",
+      "submenu": [
+        {
+          "url": "app-access-roles",
+          "name": "Roles",
+          "slug": "app-access-roles"
+        },
+        {
+          "url": "app-access-permission",
+          "name": "Permission",
+          "slug": "app-access-permission"
+        }
+      ]
+    },
+    {
+      "name": "Pages",
+      "icon": "menu-icon icon-base ti tabler-file",
+      "slug": "pages",
+      "submenu": [
+        {
+          "name": "User Profile",
+          "slug": "pages-profile",
+          "submenu": [
+            {
+              "url": "pages-profile-user",
+              "name": "Profile",
+              "slug": "pages-profile-user"
+            },
+            {
+              "url": "pages-profile-teams",
+              "name": "Teams",
+              "slug": "pages-profile-teams"
+            },
+            {
+              "url": "pages-profile-projects",
+              "name": "Projects",
+              "slug": "pages-profile-projects"
+            },
+            {
+              "url": "pages-profile-connections",
+              "name": "Connections",
+              "slug": "pages-profile-connections"
+            }
+          ]
+        },
+        {
+          "name": "Account Settings",
+          "slug": "pages-account-settings",
+          "submenu": [
+            {
+              "url": "pages-account-settings-account",
+              "name": "Account",
+              "slug": "pages-account-settings-account"
+            },
+            {
+              "url": "pages-account-settings-security",
+              "name": "Security",
+              "slug": "pages-account-settings-security"
+            },
+            {
+              "url": "pages-account-settings-billing",
+              "name": "Billing & Plans",
+              "slug": "pages-account-settings-billing"
+            },
+            {
+              "url": "pages-account-settings-notifications",
+              "name": "Notifications",
+              "slug": "pages-account-settings-notifications"
+            },
+            {
+              "url": "pages-account-settings-connections",
+              "name": "Connections",
+              "slug": "pages-account-settings-connections"
+            }
+          ]
+        },
+        {
+          "url": "pages-faq",
+          "name": "FAQ",
+          "slug": "pages-faq"
+        },
+        {
+          "url": "pages-pricing",
+          "name": "Pricing",
+          "slug": "pages-pricing"
+        },
+        {
+          "name": "Misc",
+          "slug": "pages-misc",
+          "submenu": [
+            {
+              "url": "pages-misc-error",
+              "name": "Error",
+              "slug": "pages-misc-error",
+              "target": "_blank"
+            },
+            {
+              "url": "pages-misc-under-maintenance",
+              "name": "Under Maintenance",
+              "slug": "pages-misc-under-maintenance",
+              "target": "_blank"
+            },
+            {
+              "url": "pages-misc-comingsoon",
+              "name": "Coming Soon",
+              "slug": "pages-misc-comingsoon",
+              "target": "_blank"
+            },
+            {
+              "url": "pages-misc-not-authorized",
+              "name": "Not Authorized",
+              "slug": "pages-misc-not-authorized",
+              "target": "_blank"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Authentications",
+      "icon": "menu-icon icon-base ti tabler-lock",
+      "slug": "auth",
+      "submenu": [
+        {
+          "name": "Login",
+          "slug": "auth-login",
+          "submenu": [
+            {
+              "url": "auth-login-basic",
+              "name": "Basic",
+              "slug": "auth-login-basic",
+              "target": "_blank"
+            },
+            {
+              "url": "auth-login-cover",
+              "name": "Cover",
+              "slug": "auth-login-cover",
+              "target": "_blank"
+            }
+          ]
+        },
+        {
+          "name": "Register",
+          "slug": "auth-register",
+          "submenu": [
+            {
+              "url": "auth-register-basic",
+              "name": "Basic",
+              "slug": "auth-register-basic",
+              "target": "_blank"
+            },
+            {
+              "url": "auth-register-cover",
+              "name": "Cover",
+              "slug": "auth-register-cover",
+              "target": "_blank"
+            },
+            {
+              "url": "auth-register-multisteps",
+              "name": "Multi-steps",
+              "slug": "auth-register-multisteps",
+              "target": "_blank"
+            }
+          ]
+        },
+        {
+          "name": "Verify Email",
+          "slug": "auth-verify-email",
+          "submenu": [
+            {
+              "url": "auth-verify-email-basic",
+              "name": "Basic",
+              "slug": "auth-verify-email-basic",
+              "target": "_blank"
+            },
+            {
+              "url": "auth-verify-email-cover",
+              "name": "Cover",
+              "slug": "auth-verify-email-cover",
+              "target": "_blank"
+            }
+          ]
+        },
+        {
+          "name": "Reset Password",
+          "slug": "auth-reset-password",
+          "submenu": [
+            {
+              "url": "auth-reset-password-basic",
+              "name": "Basic",
+              "slug": "auth-reset-password-basic",
+              "target": "_blank"
+            },
+            {
+              "url": "auth-reset-password-cover",
+              "name": "Cover",
+              "slug": "auth-reset-password-cover",
+              "target": "_blank"
+            }
+          ]
+        },
+        {
+          "name": "Forgot Password",
+          "slug": "auth-forgot-password",
+          "submenu": [
+            {
+              "url": "auth-forgot-password-basic",
+              "name": "Basic",
+              "slug": "auth-forgot-password-basic",
+              "target": "_blank"
+            },
+            {
+              "url": "auth-forgot-password-cover",
+              "name": "Cover",
+              "slug": "auth-forgot-password-cover",
+              "target": "_blank"
+            }
+          ]
+        }
+
+      ]
+    }
+
+
+
+
+
+
+
+
+
+
+
+  ]
+}

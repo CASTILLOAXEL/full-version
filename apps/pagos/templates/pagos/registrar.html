@@ -1,0 +1,20 @@
+{% extends layout_path %}
+{% load static %}
+
+{% block title %}Registrar Pago{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-body">
+      <h4 class="mb-4">💵 Registrar Pago</h4>
+      <form method="post" class="row g-3">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="col-12">
+          <button type="submit" class="btn btn-success">Guardar</button>
+          <a href="{% url 'pagos-lista' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

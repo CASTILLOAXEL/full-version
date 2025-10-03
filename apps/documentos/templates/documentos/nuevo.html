@@ -1,0 +1,51 @@
+{% extends layout_path %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}Subir Documento{% endblock %}
+
+{% block content %}
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">📑 Subir Documento</h4>
+    </div>
+
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data" class="row g-3">
+        {% csrf_token %}
+
+        <!-- Cliente -->
+        <div class="col-md-6">
+          <label for="id_cliente" class="form-label">Cliente</label>
+          {{ form.cliente|add_class:"form-select" }}
+        </div>
+
+        <!-- Categoría -->
+        <div class="col-md-6">
+          <label for="id_categoria" class="form-label">Categoría</label>
+          {{ form.categoria|add_class:"form-select" }}
+        </div>
+
+        <!-- Archivo -->
+        <div class="col-md-12">
+          <label for="id_archivo" class="form-label">Archivo</label>
+          {{ form.archivo|add_class:"form-control" }}
+          <small class="text-muted">Formatos permitidos: PDF, DOCX, JPG, PNG</small>
+        </div>
+
+        <!-- Estado -->
+        <div class="col-md-6">
+          <label for="id_estado" class="form-label">Estado</label>
+          {{ form.estado|add_class:"form-select" }}
+        </div>
+
+        <!-- Botones -->
+        <div class="col-12 d-flex justify-content-end mt-4">
+          <a href="{% url 'documentos-lista' %}" class="btn btn-secondary me-2">Cancelar</a>
+          <button type="submit" class="btn btn-primary">💾 Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+

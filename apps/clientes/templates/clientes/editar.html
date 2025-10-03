@@ -1,0 +1,51 @@
+{% extends layout_path %}
+{% block title %} Editar Cliente {% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-header">
+      <h4>Editar Cliente</h4>
+    </div>
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input type="text" name="nombre" id="nombre" class="form-control" value="{{ cliente.nombre }}" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="correo" class="form-label">Correo</label>
+          <input type="email" name="correo" id="correo" class="form-control" value="{{ cliente.correo }}" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="telefono" class="form-label">Teléfono</label>
+          <input type="text" name="telefono" id="telefono" class="form-control" value="{{ cliente.telefono }}">
+        </div>
+
+        <div class="mb-3">
+          <label for="nit" class="form-label">NIT</label>
+          <input type="text" name="nit" id="nit" class="form-control" value="{{ cliente.nit }}">
+        </div>
+
+        <div class="mb-3">
+          <label for="direccion" class="form-label">Dirección</label>
+          <input type="text" name="direccion" id="direccion" class="form-control" value="{{ cliente.direccion }}">
+        </div>
+
+        <div class="mb-3">
+          <label for="tipo_cliente" class="form-label">Tipo de Cliente</label>
+          <select name="tipo_cliente" id="tipo_cliente" class="form-control" required>
+            {% for tipo in tipos_clientes %}
+              <option value="{{ tipo.id }}" {% if cliente.tipo_cliente.id == tipo.id %}selected{% endif %}>{{ tipo.nombre }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

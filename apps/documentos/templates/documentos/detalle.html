@@ -1,0 +1,25 @@
+{% extends layout_path %}
+{% load static %}
+
+{% block title %}Detalle Documento{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-header">
+      <h4>📑 Detalle del Documento</h4>
+    </div>
+    <div class="card-body">
+      <p><strong>Cliente:</strong> {{ documento.cliente.nombre }}</p>
+      <p><strong>Categoría:</strong> {{ documento.categoria.nombre }}</p>
+      <p><strong>Estado:</strong> {{ documento.estado.nombre }}</p>
+      <p><strong>Versión:</strong> {{ documento.version }}</p>
+      <p><strong>Subido por:</strong> {{ documento.subido_por.username }}</p>
+      <p><strong>Fecha:</strong> {{ documento.fecha|date:"d/m/Y H:i" }}</p>
+      <p><strong>Archivo:</strong> <a href="{{ documento.archivo.url }}" target="_blank">📎 Descargar</a></p>
+
+      <a href="{% url 'documentos-editar' documento.id %}" class="btn btn-warning">✏ Editar</a>
+      <a href="{% url 'documentos-eliminar' documento.id %}" class="btn btn-danger">🗑 Eliminar</a>
+      <a href="{% url 'documentos-lista' %}" class="btn btn-secondary">🔙 Volver</a>
+    </div>
+  </div>
+{% endblock %}
