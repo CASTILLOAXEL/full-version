@@ -1,0 +1,24 @@
+{% extends layout_path %}
+{% load static %}
+
+{% block title %}Detalle del Pago{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-header">
+      <h4>👁 Detalle del Pago</h4>
+    </div>
+    <div class="card-body">
+      <p><strong>Cliente:</strong> {{ pago.cliente.nombre }}</p>
+      <p><strong>Servicio:</strong> {{ pago.servicio.nombre }}</p>
+      <p><strong>Precio Servicio:</strong> Q {{ pago.servicio.precio }}</p>
+      <p><strong>Monto Pagado:</strong> Q {{ pago.monto }}</p>
+      <p><strong>Fecha de Pago:</strong> {{ pago.fecha_pago|date:"d/m/Y" }}</p>
+      <p><strong>Estado:</strong> {{ pago.estado }}</p>
+
+      <a href="{% url 'pagos-editar' pago.id %}" class="btn btn-warning">✏ Editar</a>
+      <a href="{% url 'pagos-eliminar' pago.id %}" class="btn btn-danger">🗑 Eliminar</a>
+      <a href="{% url 'pagos-lista' %}" class="btn btn-secondary">🔙 Volver</a>
+    </div>
+  </div>
+{% endblock %}

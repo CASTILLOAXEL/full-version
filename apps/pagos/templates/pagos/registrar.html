@@ -44,4 +44,21 @@
       </form>
     </div>
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const servicioSelect = document.getElementById("id_servicio");
+      const precioInfo = document.getElementById("precio-servicio");
+
+      // opcional: puedes generar data-precio desde el queryset en el form
+      servicioSelect.addEventListener("change", function() {
+        const selectedOption = servicioSelect.options[servicioSelect.selectedIndex];
+        if (selectedOption.text.includes("pago")) {
+          precioInfo.innerText = "Precio estimado: Q 5,000.00"; // ejemplo estático
+        } else {
+          precioInfo.innerText = "";
+        }
+      });
+    });
+  </script>
 {% endblock %}
