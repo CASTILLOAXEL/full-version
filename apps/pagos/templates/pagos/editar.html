@@ -1,0 +1,47 @@
+{% extends layout_path %}
+{% load static %}
+
+{% block title %}Editar Pago{% endblock %}
+
+{% block content %}
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-dark text-white">
+      <h4>✏ Editar Pago</h4>
+    </div>
+
+    <div class="card-body">
+      <form method="post" class="row g-3">
+        {% csrf_token %}
+        <div class="col-md-6">
+          <label for="id_cliente" class="form-label">Cliente</label>
+          {{ form.cliente }}
+        </div>
+
+        <div class="col-md-6">
+          <label for="id_servicio" class="form-label">Servicio</label>
+          {{ form.servicio }}
+        </div>
+
+        <div class="col-md-6">
+          <label for="id_monto" class="form-label">Monto</label>
+          {{ form.monto }}
+        </div>
+
+        <div class="col-md-6">
+          <label for="id_fecha_pago" class="form-label">Fecha de Pago</label>
+          {{ form.fecha_pago }}
+        </div>
+
+        <div class="col-md-6">
+          <label for="id_estado" class="form-label">Estado</label>
+          {{ form.estado }}
+        </div>
+
+        <div class="col-12 mt-3 text-end">
+          <button type="submit" class="btn btn-warning">💾 Actualizar</button>
+          <a href="{% url 'pagos-lista' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

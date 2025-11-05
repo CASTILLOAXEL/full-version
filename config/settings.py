@@ -82,6 +82,8 @@ INSTALLED_APPS = [
     "apps.clientes",
     "apps.pagos",
     "apps.documentos",
+    "apps.contabilidad",
+    "apps.notificaciones",
     'accounts',
     "widget_tweaks",
     # "accounts.apps.AuthConfig"

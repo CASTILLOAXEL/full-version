@@ -1,0 +1,33 @@
+{% extends layout_path %}
+{% block title %}Editar Categoría{% endblock %}
+
+{% block content %}
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">✏ Editar Categoría</h4>
+      <a href="{% url 'categorias-lista' %}" class="btn btn-outline-secondary btn-sm">↩ Volver</a>
+    </div>
+
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="nombre" class="form-label fw-bold">Nombre</label>
+          <input
+            type="text"
+            name="nombre"
+            id="nombre"
+            class="form-control"
+            value="{{ categoria.nombre }}"
+            placeholder="Ejemplo: Factura"
+            required>
+        </div>
+
+        <div class="text-end">
+          <button type="submit" class="btn btn-primary">💾 Actualizar</button>
+          <a href="{% url 'categorias-lista' %}" class="btn btn-outline-secondary">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

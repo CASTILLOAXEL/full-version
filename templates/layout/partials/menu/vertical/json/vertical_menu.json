@@ -62,14 +62,84 @@
               "url": "documentos-subir",
               "name": "Subir Documento",
               "slug": "documentos-subir"
+            },
+            {
+              "name": "Categorias",
+              "icon": "menu-icon icon-base ti tabler-tags",
+              "slug": "app-categorias",
+              "submenu": [
+                {
+                  "url": "categorias-lista",
+                  "name": "Lista de Categorias",
+                  "slug": "categorias-lista"
+                },
+                {
+                  "url": "categorias-nueva",
+                  "name": "Nueva Categoria",
+                  "slug": "categorias-nueva"
+                }
+              ]
+            },
+            {
+              "name": "Estados",
+              "icon": "menu-icon icon-base ti tabler-flag",
+              "slug": "app-estados",
+              "submenu": [
+                {
+                  "url": "estados-lista",
+                  "name": "Lista de Estados",
+                  "slug": "estados-lista"
+                },
+                {
+                  "url": "estados-nueva",
+                  "name": "Nuevo Estado",
+                  "slug": "estados-nueva"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Contabilidad",
+          "icon": "menu-icon icon-base ti tabler-chart-bar",
+          "slug": "app-contabilidad",
+          "submenu": [
+            {
+              "url": "contabilidad-lista",
+              "name": "Movimientos Contables",
+              "slug": "contabilidad-lista"
+            },
+            {
+              "url": "contabilidad-nuevo",
+              "name": "Registrar Movimiento",
+              "slug": "contabilidad-nuevo"
+            },
+            {
+              "url": "contabilidad-reportes",
+              "name": "Reportes Financieros",
+              "slug": "contabilidad-reportes"
+            }
+          ]
+        },
+        {
+          "name": "Notificaciones",
+          "icon": "menu-icon icon-base ti tabler-bell",
+          "slug": "app-notificaciones",
+          "submenu": [
+            {
+              "url": "notificaciones-lista",
+              "name": "Lista de Notificaciones",
+              "slug": "notificaciones-lista"
+            },
+            {
+              "url": "notificaciones-nueva",
+              "name": "Nueva Notificación",
+              "slug": "notificaciones-nueva"
             }
           ]
         }
-
-
-
-
       ]
+
     },
     {
       "name": "Layouts",

@@ -1,0 +1,97 @@
+{% extends layout_path %}
+{% load static %}
+
+{% block title %}Estados de Documentos{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h4>📘 Estados de Documentos</h4>
+      <a href="{% url 'estados-nueva' %}" class="btn btn-primary">➕ Nuevo Estado</a>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Color</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for e in estados %}
+          <tr>
+            <td class="text-center">{{ forloop.counter }}</td>
+            <td>{{ e.nombre }}</td>
+            <td>
+              <span class="badge" style="background-color: {{ e.color }};">{{ e.color }}</span>
+            </td>
+            <td class="text-center">
+              <a href="{% url 'estados-editar' e.id %}" class="btn btn-warning btn-sm">✏ Editar</a>
+              <a href="{% url 'estados-eliminar' e.id %}" class="btn btn-danger btn-sm">🗑 Eliminar</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="4" class="text-center">🚫 No hay estados registrados.</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+{#{% extends layout_path %}#}
+{#{% block title %}Estados de Documentos{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#  <div class="card shadow-lg border-0">#}
+{#    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">#}
+{#      <h4 class="mb-0">📘 Estados de Documentos</h4>#}
+{#      <a href="{% url 'estados-nueva' %}" class="btn btn-success">➕ Nuevo Estado</a>#}
+{#    </div>#}
+{##}
+{#    <div class="card-body">#}
+{#      {% if estados %}#}
+{#        <table class="table table-striped table-hover align-middle">#}
+{#          <thead class="table-dark text-center">#}
+{#          <tr>#}
+{#            <th>#</th>#}
+{#            <th>Nombre</th>#}
+{#            <th>Color</th>#}
+{#            <th>Acciones</th>#}
+{#          </tr>#}
+{#          </thead>#}
+{#          <tbody>#}
+{#          {% for e in estados %}#}
+{#            <tr>#}
+{#              <td class="text-center">{{ forloop.counter }}</td>#}
+{#              <td>{{ e.nombre }}</td>#}
+{#              <td>#}
+{#                <span class="badge" style="background-color: {{ e.color }};">{{ e.color }}</span>#}
+{#              </td>#}
+{#              <td class="text-center">#}
+{#                <a href="{% url 'estados-editar' e.id %}" class="btn btn-warning btn-sm">✏ Editar</a>#}
+{#                <a href="{% url 'estados-eliminar' e.id %}" class="btn btn-danger btn-sm">🗑 Eliminar</a>#}
+{#              </td>#}
+{#            </tr>#}
+{#          {% endfor %}#}
+{#          </tbody>#}
+{#        </table>#}
+{#      {% else %}#}
+{#        <div class="alert alert-warning text-center">🚫 No hay estados registrados.</div>#}
+{#      {% endif %}#}
+{#    </div>#}
+{#  </div>#}
+{#{% endblock %}#}

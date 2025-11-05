@@ -1,25 +1,570 @@
+{#{% extends layout_path %}#}
+{#{% load static %}#}
+{##}
+{#{% block title %}Detalle Documento{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#  <div class="card shadow-lg border-0">#}
+{#    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">#}
+{#      <h4 class="mb-0">📄 Detalle del Documento</h4>#}
+{#      <a href="{% url 'documentos-lista' %}" class="btn btn-secondary btn-sm">#}
+{#        <i class="bx bx-arrow-back"></i> Volver#}
+{#      </a>#}
+{#    </div>#}
+{##}
+{#    <div class="card-body bg-dark text-white">#}
+{#      <div class="row mb-4">#}
+{#        <div class="col-md-6">#}
+{#          <p><strong>Cliente:</strong> {{ documento.cliente.nombre }}</p>#}
+{#          <p><strong>Categoría:</strong> {{ documento.categoria.nombre }}</p>#}
+{#          <p><strong>Estado:</strong> {{ documento.estado.nombre }}</p>#}
+{#        </div>#}
+{#        <div class="col-md-6">#}
+{#          <p><strong>Versión:</strong> {{ documento.version }}</p>#}
+{#          <p><strong>Subido por:</strong> {{ documento.subido_por.username }}</p>#}
+{#          <p><strong>Fecha:</strong> {{ documento.fecha|date:"d/m/Y H:i" }}</p>#}
+{#        </div>#}
+{#      </div>#}
+{##}
+{#      <hr class="border-light">#}
+{##}
+{#      <div class="d-flex align-items-center mb-3">#}
+{#        <h5 class="me-3 mb-0">📎 Archivo:</h5>#}
+{#        <a href="{{ documento.archivo.url }}" target="_blank" class="btn btn-sm btn-outline-danger">#}
+{#          <i class="bx bx-download"></i> Descargar#}
+{#        </a>#}
+{#        <button type="button" class="btn btn-sm btn-outline-info ms-2" data-bs-toggle="modal" data-bs-target="#vistaPreviaModal">#}
+{#          <i class="bx bx-show"></i> Ver Documento#}
+{#        </button>#}
+{#      </div>#}
+{##}
+{#      <!-- 🔘 Botones inferiores -->#}
+{#      <div class="mt-4 text-end">#}
+{#        <a href="{% url 'documentos-editar' documento.id %}" class="btn btn-warning">#}
+{#          <i class="bx bx-edit"></i> Editar#}
+{#        </a>#}
+{#        <a href="{% url 'documentos-eliminar' documento.id %}" class="btn btn-danger">#}
+{#          <i class="bx bx-trash"></i> Eliminar#}
+{#        </a>#}
+{#        <a href="{% url 'documentos-lista' %}" class="btn btn-secondary">#}
+{#          <i class="bx bx-arrow-back"></i> Volver#}
+{#        </a>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{##}
+{#  <!-- 🪟 MODAL CON VISOR PDF.JS -->#}
+{#  <div class="modal fade" id="vistaPreviaModal" tabindex="-1" aria-hidden="true">#}
+{#    <div class="modal-dialog modal-xl modal-dialog-centered">#}
+{#      <div class="modal-content bg-dark text-white border-0 shadow-lg rounded-3">#}
+{#        <div class="modal-header border-secondary">#}
+{#          <h5 class="modal-title">#}
+{#            👁 Vista previa — {{ documento.categoria.nombre }}#}
+{#          </h5>#}
+{#          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>#}
+{#        </div>#}
+{##}
+{#        <div class="modal-body text-center p-4">#}
+{##}
+{#          {% if ".pdf" in documento.archivo.url|lower %}#}
+{#            <!-- Contenedor del visor PDF -->#}
+{#            <div id="pdf-viewer-container" style="background:#1e1e1e; border-radius:10px; padding:10px;">#}
+{#              <div class="d-flex justify-content-between align-items-center mb-2">#}
+{#                <div>#}
+{#                  <button id="prev-page" class="btn btn-outline-light btn-sm"><i class="bx bx-chevron-left"></i></button>#}
+{#                  <button id="next-page" class="btn btn-outline-light btn-sm"><i class="bx bx-chevron-right"></i></button>#}
+{#                  <span class="mx-2">Página <span id="page-num">1</span> de <span id="page-count">?</span></span>#}
+{#                </div>#}
+{#                <div>#}
+{#                  <button id="zoom-out" class="btn btn-outline-light btn-sm"><i class="bx bx-zoom-out"></i></button>#}
+{#                  <button id="zoom-in" class="btn btn-outline-light btn-sm"><i class="bx bx-zoom-in"></i></button>#}
+{#                </div>#}
+{#              </div>#}
+{#              <canvas id="pdf-canvas" class="shadow-sm" style="width:100%; border-radius:10px; background:white;"></canvas>#}
+{#            </div>#}
+{##}
+{#          {% elif ".jpg" in documento.archivo.url|lower or ".jpeg" in documento.archivo.url|lower or ".png" in documento.archivo.url|lower %}#}
+{#            <img src="{{ documento.archivo.url }}" class="img-fluid rounded shadow border border-light"#}
+{#                 alt="Vista previa del documento" style="max-height:600px;">#}
+{##}
+{#          {% else %}#}
+{#            <div class="alert alert-warning text-dark mt-3">#}
+{#              ⚠ Este tipo de archivo no tiene vista previa.#}
+{#              <a href="{{ documento.archivo.url }}" target="_blank" class="alert-link">Descárgalo aquí</a>.#}
+{#            </div>#}
+{#          {% endif %}#}
+{##}
+{#        </div>#}
+{##}
+{#        <div class="modal-footer border-secondary">#}
+{#          <a href="{{ documento.archivo.url }}" target="_blank" class="btn btn-outline-light">#}
+{#            <i class="bx bx-download"></i> Descargar#}
+{#          </a>#}
+{#          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">#}
+{#            <i class="bx bx-x"></i> Cerrar#}
+{#          </button>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{##}
+{#  <!-- 📘 Librería PDF.js -->#}
+{#  <!-- Librería PDF.js desde CDN -->#}
+{#  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>#}
+{##}
+{##}
+{#  <script>#}
+{#    document.addEventListener("DOMContentLoaded", function() {#}
+{#      const url = "{{ documento.archivo.url }}";#}
+{#      if (!url.endsWith(".pdf")) return;#}
+{##}
+{#      let pdfDoc = null,#}
+{#        pageNum = 1,#}
+{#        pageRendering = false,#}
+{#        pageNumPending = null,#}
+{#        scale = 1.2,#}
+{#        canvas = document.getElementById("pdf-canvas"),#}
+{#        ctx = canvas.getContext("2d");#}
+{##}
+{#      function renderPage(num) {#}
+{#        pageRendering = true;#}
+{#        pdfDoc.getPage(num).then(function(page) {#}
+{#          const viewport = page.getViewport({ scale: scale });#}
+{#          canvas.height = viewport.height;#}
+{#          canvas.width = viewport.width;#}
+{##}
+{#          const renderContext = { canvasContext: ctx, viewport: viewport };#}
+{#          const renderTask = page.render(renderContext);#}
+{##}
+{#          renderTask.promise.then(function() {#}
+{#            pageRendering = false;#}
+{#            if (pageNumPending !== null) {#}
+{#              renderPage(pageNumPending);#}
+{#              pageNumPending = null;#}
+{#            }#}
+{#          });#}
+{#        });#}
+{##}
+{#        document.getElementById("page-num").textContent = num;#}
+{#      }#}
+{##}
+{#      function queueRenderPage(num) {#}
+{#        if (pageRendering) {#}
+{#          pageNumPending = num;#}
+{#        } else {#}
+{#          renderPage(num);#}
+{#        }#}
+{#      }#}
+{##}
+{#      function onPrevPage() {#}
+{#        if (pageNum <= 1) return;#}
+{#        pageNum--;#}
+{#        queueRenderPage(pageNum);#}
+{#      }#}
+{##}
+{#      function onNextPage() {#}
+{#        if (pageNum >= pdfDoc.numPages) return;#}
+{#        pageNum++;#}
+{#        queueRenderPage(pageNum);#}
+{#      }#}
+{##}
+{#      function onZoomIn() {#}
+{#        scale += 0.2;#}
+{#        queueRenderPage(pageNum);#}
+{#      }#}
+{##}
+{#      function onZoomOut() {#}
+{#        if (scale <= 0.6) return;#}
+{#        scale -= 0.2;#}
+{#        queueRenderPage(pageNum);#}
+{#      }#}
+{##}
+{#      pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {#}
+{#        pdfDoc = pdfDoc_;#}
+{#        document.getElementById("page-count").textContent = pdfDoc.numPages;#}
+{#        renderPage(pageNum);#}
+{#      });#}
+{##}
+{#      document.getElementById("prev-page").addEventListener("click", onPrevPage);#}
+{#      document.getElementById("next-page").addEventListener("click", onNextPage);#}
+{#      document.getElementById("zoom-in").addEventListener("click", onZoomIn);#}
+{#      document.getElementById("zoom-out").addEventListener("click", onZoomOut);#}
+{#    });#}
+{#  </script>#}
+{##}
+{#{% endblock %}#}
+{##}
+{##}
+{##}
+
+
 {% extends layout_path %}
 {% load static %}
 
 {% block title %}Detalle Documento{% endblock %}
 
 {% block content %}
-  <div class="card">
-    <div class="card-header">
-      <h4>📑 Detalle del Documento</h4>
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">📄 Detalle del Documento</h4>
+      <a href="{% url 'documentos-lista' %}" class="btn btn-secondary btn-sm">
+        <i class="bx bx-arrow-back"></i> Volver
+      </a>
     </div>
-    <div class="card-body">
-      <p><strong>Cliente:</strong> {{ documento.cliente.nombre }}</p>
-      <p><strong>Categoría:</strong> {{ documento.categoria.nombre }}</p>
-      <p><strong>Estado:</strong> {{ documento.estado.nombre }}</p>
-      <p><strong>Versión:</strong> {{ documento.version }}</p>
-      <p><strong>Subido por:</strong> {{ documento.subido_por.username }}</p>
-      <p><strong>Fecha:</strong> {{ documento.fecha|date:"d/m/Y H:i" }}</p>
-      <p><strong>Archivo:</strong> <a href="{{ documento.archivo.url }}" target="_blank">📎 Descargar</a></p>
 
-      <a href="{% url 'documentos-editar' documento.id %}" class="btn btn-warning">✏ Editar</a>
-      <a href="{% url 'documentos-eliminar' documento.id %}" class="btn btn-danger">🗑 Eliminar</a>
-      <a href="{% url 'documentos-lista' %}" class="btn btn-secondary">🔙 Volver</a>
+    <div class="card-body bg-dark text-white">
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <p><strong>Cliente:</strong> {{ documento.cliente.nombre }}</p>
+          <p><strong>Categoría:</strong> {{ documento.categoria.nombre }}</p>
+          <p><strong>Estado:</strong> {{ documento.estado.nombre }}</p>
+        </div>
+        <div class="col-md-6">
+          <p><strong>Versión:</strong> {{ documento.version }}</p>
+          <p><strong>Subido por:</strong> {{ documento.subido_por.username }}</p>
+          <p><strong>Fecha:</strong> {{ documento.fecha|date:"d/m/Y H:i" }}</p>
+        </div>
+      </div>
+
+      <hr class="border-light">
+
+      <div class="d-flex align-items-center mb-3">
+        <h5 class="me-3 mb-0">📎 Archivo:</h5>
+        <a href="{{ documento.archivo.url }}" target="_blank" class="btn btn-sm btn-outline-danger">
+          <i class="bx bx-download"></i> Descargar
+        </a>
+        <button type="button" class="btn btn-sm btn-outline-info ms-2" data-bs-toggle="modal" data-bs-target="#vistaPreviaModal">
+          <i class="bx bx-show"></i> Ver Documento
+        </button>
+      </div>
+
+      <!-- 🔘 Botones inferiores -->
+      <div class="mt-4 text-end">
+        <a href="{% url 'documentos-editar' documento.id %}" class="btn btn-warning">
+          <i class="bx bx-edit"></i> Editar
+        </a>
+        <a href="{% url 'documentos-eliminar' documento.id %}" class="btn btn-danger">
+          <i class="bx bx-trash"></i> Eliminar
+        </a>
+        <a href="{% url 'documentos-lista' %}" class="btn btn-secondary">
+          <i class="bx bx-arrow-back"></i> Volver
+        </a>
+      </div>
     </div>
   </div>
+
+  <!-- 🪟 MODAL CON VISOR -->
+  <div class="modal fade" id="vistaPreviaModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content bg-dark text-white border-0 shadow-lg rounded-3">
+        <div class="modal-header border-secondary">
+          <h5 class="modal-title">
+            👁 Vista previa — {{ documento.categoria.nombre }}
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body text-center p-4">
+
+          {# 📄 --- PDF --- #}
+          {% if ".pdf" in documento.archivo.url|lower %}
+            <div id="pdf-viewer-container" style="background:#1e1e1e; border-radius:10px; padding:10px;">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div>
+                  <button id="prev-page" class="btn btn-outline-light btn-sm"><i class="bx bx-chevron-left"></i></button>
+                  <button id="next-page" class="btn btn-outline-light btn-sm"><i class="bx bx-chevron-right"></i></button>
+                  <span class="mx-2">Página <span id="page-num">1</span> de <span id="page-count">?</span></span>
+                </div>
+                <div>
+                  <button id="zoom-out" class="btn btn-outline-light btn-sm"><i class="bx bx-zoom-out"></i></button>
+                  <button id="zoom-in" class="btn btn-outline-light btn-sm"><i class="bx bx-zoom-in"></i></button>
+                </div>
+              </div>
+              <canvas id="pdf-canvas" class="shadow-sm" style="width:100%; border-radius:10px; background:white;"></canvas>
+            </div>
+
+            {# 🖼️ --- IMÁGENES --- #}
+          {% elif ".jpg" in documento.archivo.url|lower or ".jpeg" in documento.archivo.url|lower or ".png" in documento.archivo.url|lower or ".gif" in documento.archivo.url|lower %}
+            <img src="{{ documento.archivo.url }}" class="img-fluid rounded shadow border border-light"
+                 alt="Vista previa del documento" style="max-height:600px; max-width:100%;">
+
+            {# 🧾 --- WORD o EXCEL --- #}
+          {% elif ".doc" in documento.archivo.url|lower or ".docx" in documento.archivo.url|lower or ".xls" in documento.archivo.url|lower or ".xlsx" in documento.archivo.url|lower %}
+            <iframe
+              src="https://view.officeapps.live.com/op/embed.aspx?src={{ archivo_absoluto }}"
+
+              width="100%" height="600px" frameborder="0"
+              class="rounded border border-secondary shadow">
+            </iframe>
+
+            {# 🚫 --- SIN VISTA PREVIA --- #}
+          {% else %}
+            <div class="alert alert-warning text-dark mt-3">
+              ⚠ Este tipo de archivo no tiene vista previa.
+              <a href="{{ documento.archivo.url }}" target="_blank" class="alert-link">Descárgalo aquí</a>.
+            </div>
+          {% endif %}
+
+        </div>
+
+        <div class="modal-footer border-secondary">
+          <a href="{{ documento.archivo.url }}" target="_blank" class="btn btn-outline-light">
+            <i class="bx bx-download"></i> Descargar
+          </a>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <i class="bx bx-x"></i> Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📘 Librería PDF.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const url = "{{ documento.archivo.url }}";
+      if (!url.toLowerCase().endsWith(".pdf")) return;
+
+      let pdfDoc = null,
+        pageNum = 1,
+        pageRendering = false,
+        pageNumPending = null,
+        scale = 1.2,
+        canvas = document.getElementById("pdf-canvas"),
+        ctx = canvas.getContext("2d");
+
+      const renderPage = (num) => {
+        pageRendering = true;
+        pdfDoc.getPage(num).then(page => {
+          const viewport = page.getViewport({ scale });
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+
+          const renderContext = { canvasContext: ctx, viewport };
+          const renderTask = page.render(renderContext);
+
+          renderTask.promise.then(() => {
+            pageRendering = false;
+            if (pageNumPending !== null) {
+              renderPage(pageNumPending);
+              pageNumPending = null;
+            }
+          });
+        });
+        document.getElementById("page-num").textContent = num;
+      };
+
+      const queueRenderPage = (num) => {
+        if (pageRendering) pageNumPending = num;
+        else renderPage(num);
+      };
+
+      const onPrevPage = () => { if (pageNum > 1) { pageNum--; queueRenderPage(pageNum); } };
+      const onNextPage = () => { if (pageNum < pdfDoc.numPages) { pageNum++; queueRenderPage(pageNum); } };
+      const onZoomIn = () => { scale += 0.2; queueRenderPage(pageNum); };
+      const onZoomOut = () => { if (scale > 0.6) { scale -= 0.2; queueRenderPage(pageNum); } };
+
+      pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
+        pdfDoc = pdfDoc_;
+        document.getElementById("page-count").textContent = pdfDoc.numPages;
+        renderPage(pageNum);
+      });
+
+      document.getElementById("prev-page").addEventListener("click", onPrevPage);
+      document.getElementById("next-page").addEventListener("click", onNextPage);
+      document.getElementById("zoom-in").addEventListener("click", onZoomIn);
+      document.getElementById("zoom-out").addEventListener("click", onZoomOut);
+    });
+  </script>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+{#{% extends layout_path %}#}
+{#{% load static %}#}
+{##}
+{#{% block title %}Detalle Documento{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#  <div class="card shadow-lg border-0">#}
+{#    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">#}
+{#      <h4 class="mb-0">📄 Detalle del Documento</h4>#}
+{#      <a href="{% url 'documentos-lista' %}" class="btn btn-secondary btn-sm">#}
+{#        <i class="bx bx-arrow-back"></i> Volver#}
+{#      </a>#}
+{#    </div>#}
+{##}
+{#    <div class="card-body bg-dark text-white">#}
+{#      <div class="row mb-4">#}
+{#        <div class="col-md-6">#}
+{#          <p><strong>Cliente:</strong> {{ documento.cliente.nombre }}</p>#}
+{#          <p><strong>Categoría:</strong> {{ documento.categoria.nombre }}</p>#}
+{#          <p><strong>Estado:</strong> {{ documento.estado.nombre }}</p>#}
+{#        </div>#}
+{#        <div class="col-md-6">#}
+{#          <p><strong>Versión:</strong> {{ documento.version }}</p>#}
+{#          <p><strong>Subido por:</strong> {{ documento.subido_por.username }}</p>#}
+{#          <p><strong>Fecha:</strong> {{ documento.fecha|date:"d/m/Y H:i" }}</p>#}
+{#        </div>#}
+{#      </div>#}
+{##}
+{#      <hr class="border-light">#}
+{##}
+{#      <div class="d-flex align-items-center mb-3">#}
+{#        <h5 class="me-3 mb-0">📎 Archivo:</h5>#}
+{#        <a href="{{ documento.archivo.url }}" target="_blank" class="btn btn-sm btn-outline-danger">#}
+{#          <i class="bx bx-download"></i> Descargar#}
+{#        </a>#}
+{#        <button type="button" class="btn btn-sm btn-outline-info ms-2" data-bs-toggle="modal" data-bs-target="#vistaPreviaModal">#}
+{#          <i class="bx bx-show"></i> Ver Documento#}
+{#        </button>#}
+{#      </div>#}
+{##}
+{#      <!-- 🔘 Botones inferiores -->#}
+{#      <div class="mt-4 text-end">#}
+{#        <a href="{% url 'documentos-editar' documento.id %}" class="btn btn-warning">#}
+{#          <i class="bx bx-edit"></i> Editar#}
+{#        </a>#}
+{#        <a href="{% url 'documentos-eliminar' documento.id %}" class="btn btn-danger">#}
+{#          <i class="bx bx-trash"></i> Eliminar#}
+{#        </a>#}
+{#        <a href="{% url 'documentos-lista' %}" class="btn btn-secondary">#}
+{#          <i class="bx bx-arrow-back"></i> Volver#}
+{#        </a>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{##}
+{#  <!-- 🪟 MODAL CON VISOR -->#}
+{#  <div class="modal fade" id="vistaPreviaModal" tabindex="-1" aria-hidden="true">#}
+{#    <div class="modal-dialog modal-xl modal-dialog-centered">#}
+{#      <div class="modal-content bg-dark text-white border-0 shadow-lg rounded-3">#}
+{#        <div class="modal-header border-secondary">#}
+{#          <h5 class="modal-title">#}
+{#            👁 Vista previa — {{ documento.categoria.nombre }}#}
+{#          </h5>#}
+{#          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>#}
+{#        </div>#}
+{##}
+{#        <div class="modal-body text-center p-4">#}
+{##}
+          {# 📄 --- PDF --- #}
+{#          {% if ".pdf" in documento.archivo.url|lower %}#}
+{#            <div id="pdf-viewer-container" style="background:#1e1e1e; border-radius:10px; padding:10px;">#}
+{#              <div class="d-flex justify-content-between align-items-center mb-2">#}
+{#                <div>#}
+{#                  <button id="prev-page" class="btn btn-outline-light btn-sm"><i class="bx bx-chevron-left"></i></button>#}
+{#                  <button id="next-page" class="btn btn-outline-light btn-sm"><i class="bx bx-chevron-right"></i></button>#}
+{#                  <span class="mx-2">Página <span id="page-num">1</span> de <span id="page-count">?</span></span>#}
+{#                </div>#}
+{#                <div>#}
+{#                  <button id="zoom-out" class="btn btn-outline-light btn-sm"><i class="bx bx-zoom-out"></i></button>#}
+{#                  <button id="zoom-in" class="btn btn-outline-light btn-sm"><i class="bx bx-zoom-in"></i></button>#}
+{#                </div>#}
+{#              </div>#}
+{#              <canvas id="pdf-canvas" class="shadow-sm" style="width:100%; border-radius:10px; background:white;"></canvas>#}
+{#            </div>#}
+{##}
+            {# 🖼️ --- IMÁGENES --- #}
+{#          {% elif ".jpg" in documento.archivo.url|lower or ".jpeg" in documento.archivo.url|lower or ".png" in documento.archivo.url|lower or ".gif" in documento.archivo.url|lower %}#}
+{#            <img src="{{ documento.archivo.url }}" class="img-fluid rounded shadow border border-light"#}
+{#                 alt="Vista previa del documento" style="max-height:600px; max-width:100%;">#}
+{##}
+            {# 🧾 --- WORD o EXCEL --- #}
+{#          {% elif ".doc" in documento.archivo.url|lower or ".docx" in documento.archivo.url|lower or ".xls" in documento.archivo.url|lower or ".xlsx" in documento.archivo.url|lower %}#}
+{#            <iframe#}
+{#              src="https://view.officeapps.live.com/op/embed.aspx?src={{ archivo_absoluto }}"#}
+{#              width="100%" height="600px" frameborder="0"#}
+{#              class="rounded border border-secondary shadow">#}
+{#            </iframe>#}
+{##}
+            {# 🚫 --- SIN VISTA PREVIA --- #}
+{#          {% else %}#}
+{#            <div class="alert alert-warning text-dark mt-3">#}
+{#              ⚠ Este tipo de archivo no tiene vista previa.#}
+{#              <a href="{{ documento.archivo.url }}" target="_blank" class="alert-link">Descárgalo aquí</a>.#}
+{#            </div>#}
+{#          {% endif %}#}
+{##}
+{#        </div>#}
+{##}
+{#        <div class="modal-footer border-secondary">#}
+{#          <a href="{{ documento.archivo.url }}" target="_blank" class="btn btn-outline-light">#}
+{#            <i class="bx bx-download"></i> Descargar#}
+{#          </a>#}
+{#          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">#}
+{#            <i class="bx bx-x"></i> Cerrar#}
+{#          </button>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{##}
+{#  <!-- 📘 Librería PDF.js -->#}
+{#  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>#}
+{#  <script>#}
+{#    document.addEventListener("DOMContentLoaded", function() {#}
+{#      const url = "{{ documento.archivo.url }}";#}
+{#      if (!url.toLowerCase().endsWith(".pdf")) return;#}
+{##}
+{#      let pdfDoc = null,#}
+{#        pageNum = 1,#}
+{#        pageRendering = false,#}
+{#        pageNumPending = null,#}
+{#        scale = 1.2,#}
+{#        canvas = document.getElementById("pdf-canvas"),#}
+{#        ctx = canvas.getContext("2d");#}
+{##}
+{#      const renderPage = (num) => {#}
+{#        pageRendering = true;#}
+{#        pdfDoc.getPage(num).then(page => {#}
+{#          const viewport = page.getViewport({ scale });#}
+{#          canvas.height = viewport.height;#}
+{#          canvas.width = viewport.width;#}
+{##}
+{#          const renderContext = { canvasContext: ctx, viewport };#}
+{#          const renderTask = page.render(renderContext);#}
+{##}
+{#          renderTask.promise.then(() => {#}
+{#            pageRendering = false;#}
+{#            if (pageNumPending !== null) {#}
+{#              renderPage(pageNumPending);#}
+{#              pageNumPending = null;#}
+{#            }#}
+{#          });#}
+{#        });#}
+{#        document.getElementById("page-num").textContent = num;#}
+{#      };#}
+{##}
+{#      const queueRenderPage = (num) => {#}
+{#        if (pageRendering) pageNumPending = num;#}
+{#        else renderPage(num);#}
+{#      };#}
+{##}
+{#      const onPrevPage = () => { if (pageNum > 1) { pageNum--; queueRenderPage(pageNum); } };#}
+{#      const onNextPage = () => { if (pageNum < pdfDoc.numPages) { pageNum++; queueRenderPage(pageNum); } };#}
+{#      const onZoomIn = () => { scale += 0.2; queueRenderPage(pageNum); };#}
+{#      const onZoomOut = () => { if (scale > 0.6) { scale -= 0.2; queueRenderPage(pageNum); } };#}
+{##}
+{#      pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {#}
+{#        pdfDoc = pdfDoc_;#}
+{#        document.getElementById("page-count").textContent = pdfDoc.numPages;#}
+{#        renderPage(pageNum);#}
+{#      });#}
+{##}
+{#      document.getElementById("prev-page").addEventListener("click", onPrevPage);#}
+{#      document.getElementById("next-page").addEventListener("click", onNextPage);#}
+{#      document.getElementById("zoom-in").addEventListener("click", onZoomIn);#}
+{#      document.getElementById("zoom-out").addEventListener("click", onZoomOut);#}
+{#    });#}
+{#  </script>#}
+{#{% endblock %}#}

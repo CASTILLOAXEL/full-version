@@ -1,18 +1,133 @@
+{#{% extends layout_path %}#}
+{#{% block title %} Detalle de Cliente {% endblock %}#}
+{##}
+{#{% block content %}#}
+{#  <div class="card">#}
+{#    <div class="card-header">#}
+{#      <h4>Detalle de Cliente</h4>#}
+{#    </div>#}
+{#    <div class="card-body">#}
+{#      <p><strong>Nombre:</strong> {{ cliente.nombre }}</p>#}
+{#      <p><strong>Correo:</strong> {{ cliente.correo }}</p>#}
+{#      <p><strong>Teléfono:</strong> {{ cliente.telefono }}</p>#}
+{#      <p><strong>NIT:</strong> {{ cliente.nit }}</p>#}
+{#      <p><strong>Dirección:</strong> {{ cliente.direccion }}</p>#}
+{#      <a href="{% url 'clientes-lista' %}" class="btn btn-secondary">Volver</a>#}
+{#    </div>#}
+{#  </div>#}
+{#{% endblock %}#}
+
 {% extends layout_path %}
+{% load static %}
+
 {% block title %} Detalle de Cliente {% endblock %}
 
 {% block content %}
-  <div class="card">
-    <div class="card-header">
-      <h4>Detalle de Cliente</h4>
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">👤 {{ cliente.nombre }}</h4>
+      <a href="{% url 'clientes-lista' %}" class="btn btn-secondary btn-sm">↩ Volver</a>
     </div>
+
     <div class="card-body">
-      <p><strong>Nombre:</strong> {{ cliente.nombre }}</p>
-      <p><strong>Correo:</strong> {{ cliente.correo }}</p>
-      <p><strong>Teléfono:</strong> {{ cliente.telefono }}</p>
-      <p><strong>NIT:</strong> {{ cliente.nit }}</p>
-      <p><strong>Dirección:</strong> {{ cliente.direccion }}</p>
-      <a href="{% url 'clientes-lista' %}" class="btn btn-secondary">Volver</a>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <p><strong>📧 Correo:</strong> {{ cliente.correo }}</p>
+          <p><strong>📞 Teléfono:</strong> {{ cliente.telefono }}</p>
+          <p><strong>🧾 NIT:</strong> {{ cliente.nit }}</p>
+        </div>
+        <div class="col-md-6">
+          <p><strong>🏠 Dirección:</strong> {{ cliente.direccion }}</p>
+          <p><strong>🏷 Tipo de Cliente:</strong> {{ cliente.tipo_cliente.nombre }}</p>
+          <p><strong>💼 Tipo de Contribuyente:</strong>
+            {% if cliente.tipo_contribuyente == "PEQUEÑO" %}
+              <span class="badge bg-info text-dark">Pequeño Contribuyente</span>
+            {% elif cliente.tipo_contribuyente == "MEDIANO" %}
+              <span class="badge bg-success">Mediano Contribuyente</span>
+            {% else %}
+              <span class="badge bg-secondary">Sin definir</span>
+            {% endif %}
+          </p>
+        </div>
+      </div>
+
+      <hr>
+
+      <h5 class="mt-4">📁 Documentos que debe cargar mensualmente</h5>
+      <ul class="list-group list-group-flush mb-4">
+        {% for doc in documentos_requeridos %}
+          <li class="list-group-item d-flex align-items-center">
+            <i class="fa fa-file-text text-primary me-2"></i> {{ doc }}
+          </li>
+        {% empty %}
+          <li class="list-group-item text-muted">No hay documentos configurados</li>
+        {% endfor %}
+      </ul>
+
+      <div class="d-flex justify-content-end gap-2">
+        <a href="{% url 'clientes-editar' cliente.id %}" class="btn btn-warning">
+          ✏ Editar
+        </a>
+        <form method="post" action="{% url 'clientes-eliminar' cliente.id %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas eliminar este cliente?');">
+            🗑 Eliminar
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 {% endblock %}
+
+
+
+
+
+
+{#{% extends layout_path %}#}
+{#{% load static %}#}
+{##}
+{#{% block title %} Detalle de Cliente {% endblock %}#}
+{##}
+{#{% block content %}#}
+{#  <div class="card shadow-lg">#}
+{#    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">#}
+{#      <h4 class="mb-0">👤 {{ cliente.nombre }}</h4>#}
+{#      <a href="{% url 'clientes-lista' %}" class="btn btn-secondary btn-sm">↩ Volver</a>#}
+{#    </div>#}
+{##}
+{#    <div class="card-body">#}
+{#      <div class="row">#}
+{#        <div class="col-md-6">#}
+{#          <p><strong>📧 Correo:</strong> {{ cliente.correo }}</p>#}
+{#          <p><strong>📞 Teléfono:</strong> {{ cliente.telefono }}</p>#}
+{#          <p><strong>🧾 NIT:</strong> {{ cliente.nit }}</p>#}
+{#        </div>#}
+{#        <div class="col-md-6">#}
+{#          <p><strong>🏠 Dirección:</strong> {{ cliente.direccion }}</p>#}
+{#          <p><strong>🏷 Tipo de Cliente:</strong> {{ cliente.tipo_cliente.nombre }}</p>#}
+{#          <p><strong>💼 Régimen:</strong> {{ cliente.get_tipo_contribuyente_display }}</p>#}
+{#        </div>#}
+{#      </div>#}
+{##}
+{#      <hr>#}
+{##}
+{#      <h5>📁 Documentos que debe cargar mensualmente</h5>#}
+{#      <ul class="list-group mb-3">#}
+{#        {% for doc in documentos_requeridos %}#}
+{#          <li class="list-group-item">{{ doc }}</li>#}
+{#        {% empty %}#}
+{#          <li class="list-group-item text-muted">No hay documentos configurados</li>#}
+{#        {% endfor %}#}
+{#      </ul>#}
+{##}
+{#      <div class="text-end">#}
+{#        <a href="{% url 'clientes-editar' cliente.id %}" class="btn btn-warning">✏ Editar</a>#}
+{#        <form method="post" action="{% url 'clientes-eliminar' cliente.id %}" style="display:inline;">#}
+{#          {% csrf_token %}#}
+{#          <button type="submit" class="btn btn-danger">🗑 Eliminar</button>#}
+{#        </form>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{#{% endblock %}#}

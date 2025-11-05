@@ -1,0 +1,89 @@
+{% extends layout_path %}
+{% load static %}
+
+{% block title %}Categorías de Documentos{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h4>📂 Categorías de Documentos</h4>
+      <a href="{% url 'categorias-nueva' %}" class="btn btn-primary">➕ Nueva Categoría</a>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for cat in categorias %}
+          <tr>
+            <td class="text-center">{{ forloop.counter }}</td>
+            <td>{{ cat.nombre }}</td>
+            <td class="text-center">
+              <a href="{% url 'categorias-editar' cat.id %}" class="btn btn-warning btn-sm">✏ Editar</a>
+              <a href="{% url 'categorias-eliminar' cat.id %}" class="btn btn-danger btn-sm">🗑 Eliminar</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="3" class="text-center">🚫 No hay categorías registradas.</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+{#{% extends layout_path %}#}
+{#{% block title %}Categorías de Documentos{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#  <div class="card shadow-lg border-0">#}
+{#    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">#}
+{#      <h4 class="mb-0">📂 Categorías de Documentos</h4>#}
+{#      <a href="{% url 'categorias-nueva' %}" class="btn btn-success">➕ Nueva Categoría</a>#}
+{#    </div>#}
+{##}
+{#    <div class="card-body">#}
+{#      {% if categorias %}#}
+{#        <table class="table table-striped table-hover align-middle">#}
+{#          <thead class="table-dark text-center">#}
+{#          <tr>#}
+{#            <th>#</th>#}
+{#            <th>Nombre</th>#}
+{#            <th>Acciones</th>#}
+{#          </tr>#}
+{#          </thead>#}
+{#          <tbody>#}
+{#          {% for cat in categorias %}#}
+{#            <tr>#}
+{#              <td class="text-center">{{ forloop.counter }}</td>#}
+{#              <td>{{ cat.nombre }}</td>#}
+{#              <td class="text-center">#}
+{#                <a href="{% url 'categorias-editar' cat.id %}" class="btn btn-warning btn-sm">✏ Editar</a>#}
+{#                <a href="{% url 'categorias-eliminar' cat.id %}" class="btn btn-danger btn-sm">🗑 Eliminar</a>#}
+{#              </td>#}
+{#            </tr>#}
+{#          {% endfor %}#}
+{#          </tbody>#}
+{#        </table>#}
+{#      {% else %}#}
+{#        <div class="alert alert-warning text-center">🚫 No hay categorías registradas.</div>#}
+{#      {% endif %}#}
+{#    </div>#}
+{#  </div>#}
+{#{% endblock %}#}

@@ -1,0 +1,22 @@
+{% extends layout_path %}
+{% load static %}
+
+{% block title %}Registrar Movimiento{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-header bg-dark text-white">
+      <h4>💵 Registrar Movimiento Contable</h4>
+    </div>
+    <div class="card-body">
+      <form method="post" class="row g-3">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="col-12 mt-3 text-end">
+          <button type="submit" class="btn btn-success">💾 Guardar</button>
+          <a href="{% url 'contabilidad-lista' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

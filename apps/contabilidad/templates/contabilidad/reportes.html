@@ -1,0 +1,167 @@
+{% extends layout_path %}
+{% load static %}
+
+{% block title %}Reportes Financieros{% endblock %}
+
+{% block content %}
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">📈 Reportes Contables</h4>
+    </div>
+
+    <div class="card-body">
+      <!-- FILTROS -->
+{#      <form method="get" class="row g-3 mb-4">#}
+{#        <div class="col-md-3">#}
+{#          <label class="form-label">Desde</label>#}
+{#          <input type="date" name="inicio" class="form-control" value="{{ fecha_inicio }}">#}
+{#        </div>#}
+{#        <div class="col-md-3">#}
+{#          <label class="form-label">Hasta</label>#}
+{#          <input type="date" name="fin" class="form-control" value="{{ fecha_fin }}">#}
+{#        </div>#}
+{#        <div class="col-md-3 align-self-end">#}
+{#          <button type="submit" class="btn btn-primary w-100">Filtrar</button>#}
+{#        </div>#}
+{#      </form>#}
+      <!-- FILTROS -->
+      <form method="get" class="row g-3 mb-4">
+        <div class="col-md-3">
+          <label class="form-label">Desde</label>
+          <input type="date" name="inicio" class="form-control" value="{{ fecha_inicio }}">
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Hasta</label>
+          <input type="date" name="fin" class="form-control" value="{{ fecha_fin }}">
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Cliente</label>
+          <select name="cliente" class="form-select">
+            <option value="">Todos</option>
+            {% for c in clientes %}
+              <option value="{{ c.id }}" {% if c.id|stringformat:"s" == request.GET.cliente %}selected{% endif %}>
+                {{ c.nombre }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="col-md-3 align-self-end">
+          <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+        </div>
+      </form>
+
+
+      <!-- TOTALES -->
+      <div class="row text-center mb-4">
+        <div class="col-md-4">
+          <div class="card bg-success text-white shadow-sm">
+            <div class="card-body">
+              <h5>💰 Total Ingresos</h5>
+              <h3>Q {{ total_ingresos|floatformat:2 }}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card bg-danger text-white shadow-sm">
+            <div class="card-body">
+              <h5>💸 Total Egresos</h5>
+              <h3>Q {{ total_egresos|floatformat:2 }}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card bg-info text-white shadow-sm">
+            <div class="card-body">
+              <h5>📊 Balance General</h5>
+              <h3>Q {{ balance|floatformat:2 }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GRAFICO -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <canvas id="graficoContable" height="100"></canvas>
+        </div>
+      </div>
+
+      <!-- TABLA -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+          <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Cliente</th>
+            <th>Tipo</th>
+            <th>Monto</th>
+            <th>Fecha</th>
+            <th>Descripción</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for m in movimientos %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ m.cliente.nombre }}</td>
+              <td>
+                {% if m.tipo == "Ingreso" %}
+                  <span class="badge bg-success">{{ m.tipo }}</span>
+                {% else %}
+                  <span class="badge bg-danger">{{ m.tipo }}</span>
+                {% endif %}
+              </td>
+              <td>Q {{ m.monto }}</td>
+              <td>{{ m.fecha|date:"d/m/Y" }}</td>
+              <td>{{ m.descripcion|default:"-" }}</td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="6" class="text-center text-muted">Sin movimientos</td></tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- EXPORTAR -->
+      <div class="text-end mt-3">
+        <a href="{% url 'contabilidad-exportar-excel' %}?inicio={{ fecha_inicio }}&fin={{ fecha_fin }}&cliente={{ request.GET.cliente }}"
+           class="btn btn-outline-success me-2">
+          <i class="ti ti-file-spreadsheet"></i> Exportar a Excel
+        </a>
+        <a href="{% url 'contabilidad-exportar-pdf' %}?inicio={{ fecha_inicio }}&fin={{ fecha_fin }}&cliente={{ request.GET.cliente }}"
+           class="btn btn-outline-danger">
+          <i class="ti ti-file-description"></i> Exportar a PDF
+        </a>
+      </div>
+
+
+    </div>
+  </div>
+
+  <!-- GRAFICO -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const ctx = document.getElementById('graficoContable');
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [{% for m in movimientos %}'{{ m.fecha|date:"d/m" }}',{% endfor %}],
+        datasets: [
+          {
+            label: 'Ingresos',
+            data: [{% for m in movimientos %}{% if m.tipo == "Ingreso" %}{{ m.monto }},{% endif %}{% endfor %}],
+            backgroundColor: 'rgba(40, 167, 69, 0.7)',
+          },
+          {
+            label: 'Egresos',
+            data: [{% for m in movimientos %}{% if m.tipo == "Egreso" %}{{ m.monto }},{% endif %}{% endfor %}],
+            backgroundColor: 'rgba(220, 53, 69, 0.7)',
+          }
+        ]
+      }
+    });
+  </script>
+{% endblock %}

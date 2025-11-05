@@ -4,14 +4,26 @@
 {% block title %}Eliminar Documento{% endblock %}
 
 {% block content %}
-  <div class="card">
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">🗑 Eliminar Documento</h4>
+      <a href="{% url 'documentos-lista' %}" class="btn btn-light btn-sm">↩ Cancelar</a>
+    </div>
+
     <div class="card-body text-center">
-      <h4 class="mb-4">⚠ ¿Seguro que deseas eliminar este documento?</h4>
-      <p><strong>{{ documento.cliente.nombre }}</strong> - {{ documento.categoria.nombre }}</p>
+      <h5 class="mb-3">¿Estás seguro de que deseas eliminar este documento?</h5>
+
+      <div class="alert alert-warning text-start">
+        <p><strong>Cliente:</strong> {{ documento.cliente.nombre }}</p>
+        <p><strong>Categoría:</strong> {{ documento.categoria.nombre }}</p>
+        <p><strong>Archivo:</strong> {{ documento.archivo.name }}</p>
+        <p><strong>Fecha:</strong> {{ documento.fecha|date:"d/m/Y H:i" }}</p>
+      </div>
+
       <form method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Sí, eliminar</button>
-        <a href="{% url 'documentos-lista' %}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-danger btn-lg">⚠ Eliminar definitivamente</button>
+        <a href="{% url 'documentos-lista' %}" class="btn btn-secondary btn-lg ms-2">❌ Cancelar</a>
       </form>
     </div>
   </div>

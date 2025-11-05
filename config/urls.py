@@ -118,6 +118,12 @@ urlpatterns = [
     path('clientes/', include('apps.clientes.urls')),
     path('pagos/', include('apps.pagos.urls')),
     path('documentos/', include('apps.documentos.urls')),
+
+    path('contabilidad/', include('apps.contabilidad.urls')),
+
+    path("notificaciones/", include("apps.notificaciones.urls")),
+
+
 ]
 if settings.DEBUG:  # Solo en desarrollo
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

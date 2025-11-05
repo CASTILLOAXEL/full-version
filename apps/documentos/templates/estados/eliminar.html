@@ -1,0 +1,18 @@
+{% extends layout_path %}
+{% block title %}Eliminar Estado{% endblock %}
+
+{% block content %}
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-danger text-white">
+      <h4>⚠ Eliminar Estado</h4>
+    </div>
+    <div class="card-body text-center">
+      <p>¿Seguro que deseas eliminar el estado <strong>{{ estado.nombre }}</strong>?</p>
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+        <a href="{% url 'estados-lista' %}" class="btn btn-secondary">Cancelar</a>
+      </form>
+    </div>
+  </div>
+{% endblock %}
